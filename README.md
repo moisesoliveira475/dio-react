@@ -1,0 +1,1 @@
+Conhecendo a aplicação e construindo componentes 26:00
