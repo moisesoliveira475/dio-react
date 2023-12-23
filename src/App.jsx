@@ -2,6 +2,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/index";
 import Login from "./pages/login/index";
+import Feed from "./pages/feed/index"
+
 
 function App() {
 
@@ -9,7 +11,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/feed" element={<Feed />}/>
       </Routes>
     </BrowserRouter>
   )

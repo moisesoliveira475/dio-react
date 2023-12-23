@@ -8,4 +8,4 @@ const Button = ({title, variant="primary", onClick}) => {
   )
 }
 
-export default Button
+export default Button;

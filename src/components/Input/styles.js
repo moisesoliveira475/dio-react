@@ -19,5 +19,6 @@ export const InputText = styled.input`
   color: #ffffff;
   border: 0;
   height: 30px;
+  width: 100%;
 `
 
