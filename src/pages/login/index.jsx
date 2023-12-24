@@ -9,25 +9,39 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
+import { api } from "../../services/api";
+
 const schema = yup.object({
 	email: yup.string().email().required('Campo obrigatório'),
 	password: yup.string().min(3, 'no minimo 3 caracteres').required('Campo obrigatório'),
 }).required();
 
 const Login = () => {
-
-	const { control, handleSubmit, formState: { errors, isValid }} = useForm({
+	
+	const navigate = useNavigate();
+	const { control, handleSubmit, formState: { errors}} = useForm({
 		resolver: yupResolver(schema),
 		mode: 'onChange'
 	});
 
-	const onSubmit = data => console.log(data)
-
-	const navigate = useNavigate();
-
-	const handleClickSignIn = () => {
-		navigate('/feed')
+	const onSubmit = async (formData) => {
+		try {
+				const { data } = await api.get(`/users?email=${formData.email}&senha=${formData.password}`);
+			if(data.lenght === 0) {
+				navigate('/feed')
+			} else {
+				alert('email ou senha invalidos')
+			}
+		} catch{
+				alert('Houve um erro, tente novamente')
+		}
 	}
+
+/* 	const debug = async () => {
+		const response = await api.get(`/users?email=${formData.email}&senha=${formData.password}`)
+		console.log(response)
+	} */
+
 
 	return (
 		<>
@@ -42,10 +56,12 @@ const Login = () => {
 					<Wrapper>
 						<TitleLogin>Faça seu cadastro</TitleLogin>
 						<SubtitleLogin>Faça seu login e make the change._</SubtitleLogin>
-						<form onSubmit={handleSubmit(onSubmit)}>
-							<Input name="emai" errorMessage={errors?.email?.message} control={control} placeholder='E-mail' leftIcon={<MdEmail />}/>
+						<form onSubmit={() => handleSubmit(onSubmit())}>
+							<Input name="email" errorMessage={errors?.email?.message} control={control} placeholder='E-mail' leftIcon={<MdEmail />}/>
+							{errors.email && <span>E-mail é obrigatório</span>}
 							<Input name="password" errorMessage={errors?.password?.message} control={control} type='password' placeholder='Password' leftIcon={<MdLock />}/>
-							<Button title={"Entrar"} variant="secondary" onClick={handleClickSignIn()} type='submit'/>
+							{errors.senha && <span>Senha é obrigatório</span>}
+							<Button title={"Entrar"} variant="secondary" type='submit'/>
 						</form>
 						<Row>
 							<EsqueciText>Esqueci minha senha</EsqueciText>

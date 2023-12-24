@@ -2,8 +2,16 @@ import Button from '../Button'
 import { Container, Input, Menu, MenuRight, Row, SearchInputContainer, Wrapper } from './styles'
 import logo from '../../assets/logo.png'
 import { UserPicture } from '../Card/styles'
+import { useNavigate } from 'react-router-dom'
 
 const Header = ({ autenticado }) => {
+
+  const navigate = useNavigate();
+
+  const handleClickSignIn = () => {
+    navigate('/login')
+  }
+
   return (
     <Wrapper>
       <Container>
@@ -16,15 +24,16 @@ const Header = ({ autenticado }) => {
               </SearchInputContainer>
               <Menu>Live code</Menu>
               <Menu>Global</Menu>
+              <Button title={'sair'} onClick={() => handleClickSignIn()} />
             </>
           ) : null}
         </Row>
         <Row>
           {autenticado ? (
-            <UserPicture src='https://avatars.githubusercontent.com/u/45184516?v=4'/>
+            <UserPicture src='https://avatars.githubusercontent.com/u/45184516?v=4' />
           ) : (
             <>
-              <MenuRight href='#'>Home</MenuRight>
+              <MenuRight href='/'>Home</MenuRight>
               <Button title='entrar' />
               <Button title='cadastrar' />
             </>

@@ -1,5 +1,5 @@
 import { IconContainer, InputContainer, InputText, ErrorText } from './styles'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 const Input = ({ leftIcon, name, control, errorMessage, ...rest }) => {
   return (
@@ -9,7 +9,7 @@ const Input = ({ leftIcon, name, control, errorMessage, ...rest }) => {
         <Controller
           name={name}
           control={control}
-          rules={{ required: true }}
+          defaultValue={''}
           render={({ field }) => <InputText {...field} {...rest} />}
         />
       </InputContainer>
