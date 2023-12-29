@@ -1,12 +1,15 @@
-import Button from '../Button'
-import { Container, Input, Menu, MenuRight, Row, SearchInputContainer, Wrapper } from './styles'
-import logo from '../../assets/logo.png'
-import { UserPicture } from '../Card/styles'
 import { useNavigate } from 'react-router-dom'
+import logo from '../../assets/logo.png'
+import { useAuth } from '../../hooks/useAuth'
+import Button from '../Button'
+import { UserPicture } from '../Card/styles'
+import { Container, Input, Menu, MenuRight, Row, SearchInputContainer, Wrapper } from './styles'
 
-const Header = ({ autenticado }) => {
+const Header = () => {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
+  const { handleLogout, Loggedin } = useAuth()
 
   const handleClickSignIn = () => {
     navigate('/login')
@@ -16,8 +19,8 @@ const Header = ({ autenticado }) => {
     <Wrapper>
       <Container>
         <Row>
-          <img src={logo} alt="" />
-          {autenticado ? (
+            <img src={logo} alt="" />
+          {Loggedin ? (
             <>
               <SearchInputContainer>
                 <Input placeholder='buscar...' />
@@ -29,13 +32,13 @@ const Header = ({ autenticado }) => {
           ) : null}
         </Row>
         <Row>
-          {autenticado ? (
+          {Loggedin ? (
             <UserPicture src='https://avatars.githubusercontent.com/u/45184516?v=4' />
           ) : (
             <>
               <MenuRight href='/'>Home</MenuRight>
               <Button title='entrar' />
-              <Button title='cadastrar' />
+              <Button title='sair' onClick={handleLogout}/>
             </>
           )}
         </Row>
